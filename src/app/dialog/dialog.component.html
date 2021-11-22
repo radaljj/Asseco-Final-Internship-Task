@@ -1,0 +1,36 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+    <h1 mat-dialog-title>Choose category</h1>
+    <p *ngIf="brojacSelectova>=1">You have selected {{brojacSelectova}}, for multiple categorization</p>
+    <mat-dialog-content>
+        <mat-form-field>
+          <mat-select  required [(ngModel)]="selected"  formControlName="glavnaKategorija"  placeholder="Categories">
+            <ng-container *ngFor="let kat of nizKategorija">
+                <mat-option *ngIf="kat.parentCode==''" value="{{kat.code}}">
+                  {{kat.name}}
+              </mat-option>
+            </ng-container>
+      </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-content>
+      <mat-form-field>
+          <mat-select  [disabled]="selected==''" formControlName="podKategorija"  placeholder="Subcategories">
+                  <ng-container *ngFor="let item of nizKategorija">
+                    <mat-option *ngIf="item.parentCode==selected" value="{{item.code}}">
+                      {{item.name}}
+                    </mat-option>
+                  </ng-container>
+          </mat-select>
+      </mat-form-field>
+  </mat-dialog-content>
+    <mat-dialog-actions>
+
+      
+     
+      <button id="izadji" mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+      <button id="sacuvaj" mat-button type="submit">Add</button>
+    
+    </mat-dialog-actions>
+
+    
+  </form>

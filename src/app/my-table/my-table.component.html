@@ -1,0 +1,157 @@
+
+
+<div class="celaVisina">
+  <div class="sviDugmici">
+<button id="chartDugme" (click)="openChart()"  class=" btn-primary" style="border-radius: 3px; margin-bottom: 10px; margin-right: 12px; margin-left: 120px;">Open categories chart</button>
+<button id="kategorije" (click)="openSelect()"  class=" btn-primary" style="border-radius: 3px; margin-bottom: 10px;">Categorize multiple transactions</button>
+<div *ngFor="let n of prviElementTrans">
+
+<div *ngIf="dugmici==true">
+  <button (click)="uzmiIdeve(); otvoriPopUpKategorije(n) "   class=" btn-primary" style="border-radius: 3px; margin-bottom: 10px; margin-right: 19px;margin-left: 200px;">Categorize</button>
+  <button (click)="closeSelect();"  class=" btn-primary" style="border-radius: 3px; margin-bottom: 10px; background: gray  !important; border-color: gray !important;">Cancel</button>
+</div>
+<mat-form-field style="margin-top: 15px;" appearance="outline">
+  <mat-label>Search</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search transactions..." #input>
+</mat-form-field>
+</div><div class="search-container"  >
+
+  <mat-form-field hintLabel="Filter by transaction kind"  appearance="outline" >
+    <mat-select (selectionChange)="filterKind($event)">
+      <mat-option value="dep">Deposit</mat-option>
+      <mat-option value="fee">Fee</mat-option>
+      <mat-option value="pmt">Payment</mat-option>
+      <mat-option value="wdw">Withdrawal</mat-option>
+      <mat-option value="inc">Interest</mat-option>
+      <mat-option value="rev">Reversal</mat-option>
+      <mat-option value="adj">Adjustment</mat-option>
+      <mat-option value="lnd">Loan disbursement</mat-option>
+      <mat-option value="lnr">Loan repayment</mat-option>
+      <mat-option value="fcx">Foreign currency</mat-option>
+      <mat-option value="aop">Account openning</mat-option>
+      <mat-option value="acl">Account closing</mat-option>
+      <mat-option value="spl">Split payment</mat-option>
+      <mat-option value="sal">Salary</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+</div>
+
+<div class="mat-elevation-z8">
+<table style="margin-top: 0px" mat-table [dataSource]="dataSource" matSort   class="mat-elevation-z8" >
+
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox  (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="imageUrl">
+    <th mat-header-cell *matHeaderCellDef  > </th>
+    <td mat-cell *matCellDef="let nizSlika"> <img src="https://cdn3.iconfinder.com/data/icons/e-commerce-trading/512/transaction_A-512.png" /> </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="row1">
+    <th mat-header-cell *matHeaderCellDef >  </th>
+    <td  mat-cell *matCellDef="let element" >
+      <div class="probni">
+        <td  *ngIf="element.catcode== null ">{{element.beneficiaryName}}<br>{{element.date|date:'short'}}<br><mat-chip-list>
+          <mat-chip id="chips" color="grey" (click)="otvoriPopUpKategorije(element)"style=" margin-top:11px ; background-color:gray !important; color:white !important" selected>• Add category + </mat-chip></mat-chip-list> </td>
+        <td *ngIf="element.catcode!= null "> {{element.beneficiaryName}}<br>{{element.date| date:'short'}}<br><mat-chip-list>
+          <mat-chip id="chips" color="primary" (click)="otvoriPopUpKategorije(element)"  style=" margin-top:11px ; " selected>• {{element.catcode}}</mat-chip></mat-chip-list> </td>
+        </div>
+      </td>
+</ng-container>
+
+  <ng-container matColumnDef="row2" >
+    <th  mat-header-cell *matHeaderCellDef>  </th>
+    <td mat-cell  *matCellDef="let element">
+       <div class="suma"> {{element.amount}}</div><br> <img id="slikaMala" src="https:www.telenor.me/assets/img/logos/telenor-logo.png" /> <mat-icon> location_on</mat-icon> 
+      <br> <button   (click)="otvoriPopUpTransakcije(element)"   class="tbl-btn btn-primary" style="border-radius: 3px;margin-bottom: 11px;">Split tranasction</button> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="strelice">
+    <th mat-header-cell *matHeaderCellDef ><button (click)="reload()" class="tbl-btn btn-primary"> Reset filters </button>  </th>
+    <mat-cell *matCellDef="let element" >
+        <td *ngIf="element.direction== 'd' "><img style="margin-top:30px;"id="slikaMala" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQwkg89BC8TVQ9DhFsBUOUhz6XHUiawGS-QA&usqp=CAU" /></td>
+        <td *ngIf="element.direction== 'c' "><img style="margin-top:30px;" id="slikaMala" src="https://cdn0.iconfinder.com/data/icons/flat-round-arrow-arrow-head/512/Green_Arrow_Top-512.png" /></td>
+    </mat-cell>
+</ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="selection.toggle(row)">
+  </tr>
+  
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter </td>
+  </tr>
+  
+</table>
+
+
+<mat-paginator [pageSizeOptions]="[5,10]"
+showFirstLastButtons 
+aria-label="Select page of periodic elements">
+</mat-paginator>
+</div>
+<div class="mobilniDugmici">
+<button (click)="openSelect()"  style="margin-left: 150px;margin-top: 15px;" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+  <mat-icon>group_work</mat-icon>
+</button>
+<button  (click)="openChart()" style="margin-left: 10px;margin-top: 15px;" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+  <mat-icon>bar_chart</mat-icon>
+</button>
+ <button  (click)="openSearch()" style="margin-left: 10px;margin-top: 15px;" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+  <mat-icon>search</mat-icon>
+</button>
+
+<div *ngIf="dugmici1==true">
+
+  <mat-form-field style="margin-top: 15px;" appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search transactions..." #input>
+  </mat-form-field>
+
+  <mat-form-field hintLabel="Filter by transaction kind"  appearance="outline" >
+    <mat-select (selectionChange)="filterKind($event)">
+      <mat-option value="dep">Deposit</mat-option>
+      <mat-option value="fee">Fee</mat-option>
+      <mat-option value="pmt">Payment</mat-option>
+      <mat-option value="wdw">Withdrawal</mat-option>
+      <mat-option value="inc">Interest</mat-option>
+      <mat-option value="rev">Reversal</mat-option>
+      <mat-option value="adj">Adjustment</mat-option>
+      <mat-option value="lnd">Loan disbursement</mat-option>
+      <mat-option value="lnr">Loan repayment</mat-option>
+      <mat-option value="fcx">Foreign currency</mat-option>
+      <mat-option value="aop">Account openning</mat-option>
+      <mat-option value="acl">Account closing</mat-option>
+      <mat-option value="spl">Split payment</mat-option>
+      <mat-option value="sal">Salary</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+<div *ngFor="let n of prviElementTrans">
+
+  <div *ngIf="dugmici==true">
+    <button (click)="uzmiIdeve(); otvoriPopUpKategorije(n) "   class=" btn-primary" style="border-radius: 3px;margin-top: 15px; margin-bottom: 10px; margin-right: 19px;margin-left: 120px;">Categorize</button>
+    <button (click)="closeSelect();"  class=" btn-primary" style="border-radius: 3px; margin-bottom: 10px; background: gray  !important; border-color: gray !important;">Cancel</button>
+  </div>
+  </div>
+</div>
+
+
+</div>

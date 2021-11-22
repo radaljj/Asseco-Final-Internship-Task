@@ -1,0 +1,20 @@
+
+<div *ngIf='this.someData.length <=0'>
+  Please wait while the latest data is fetched
+</div>
+
+<div *ngIf='this.someData.length >0'>
+  Displaying data for {{this.someData.length}} main categories
+  
+
+<div class="chart">
+      <canvas baseChart style="height: 200px;"
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        [options]="pieChartOptions"
+        [colors]="pieChartColors"
+        [legend]="pieChartLegend">
+      </canvas>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+#sacuvaj{
+    background-color:green !important;
+  
+  }
+  #izadji{
+    background-color:grey !important;
+    margin-right: 5px;
+    margin-left: 320px;
+
+  }
+  mat-form-field{
+    width: 500px;
+  }
+
+ 
+
+  @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  mat-form-field,#izadji{ 
+		width: 150px;
+    margin-left: 0px;
+   
+	}
+}
+
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  #izadji{ 
+    margin: 5px;
+   
+	}
+}

@@ -1,0 +1,147 @@
+.full-width-table {
+  width: 100%;
+  margin-top: 5%;
+}
+.tbl-btn{
+border-radius: 9px;}
+
+table{
+  width:520px;
+}
+.modal-header{
+  background-color:#0A8AD2 !important;
+  color:white;
+}
+.mat-form-field{
+  margin: 0 auto;
+ 
+
+
+}
+
+.centarForma{
+  margin: auto;
+  width: 50%;
+  margin-top: 10px;
+  padding: 10px;
+}
+h4{
+  margin: 0 auto;
+
+}
+.suma{
+  margin-top:10px
+}
+#sacuvaj{
+  background-color:green !important;
+
+}
+#izadji{
+  background-color:grey !important;
+
+}
+button{
+  background-color:#0A8AD2 !important;
+}
+button:disabled {
+  background-color: gray !important;
+  border-color: gray;
+}
+.vl {
+  border-left: 1px solid green;
+  height: 25px;
+  left: 50%;
+  margin-left: -3px;
+}
+.mat-chip{
+  background-color:#0A8AD2 !important;
+  border-top-left-radius: 0px!important;
+  border-bottom-left-radius: 0px!important;
+
+}
+#slikaMala{
+  background-size: cover;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  margin-bottom: 13px;
+  margin-left:45px;
+}
+img{
+
+  width: 120px;
+  border-radius: 50%;
+    width: 50px;
+    text-align: center;
+    
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+table{
+  width: 650px;
+}
+
+@media screen and (max-device-width: 800px) {
+table{
+  width: 100px;
+
+}
+#kategorije{
+  margin-top:150px;
+}
+}
+.celaVisina{
+   
+  overflow-y: inherit;
+ 
+  height:600px;
+}
+
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	table, thead, tbody, th, td, tr { 
+		width: 100px;
+	}
+}
+
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	.celaVisina { 
+height: 100%;
+width: 100%;
+margin-top: 500px;	}
+}
+
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	#chips { 
+    height: 100%;
+	}
+}
+
+@media (max-width: 767px) {
+  .sviDugmici {
+    display: none;
+  }
+}
+@media (min-width: 767px) {
+  .mobilniDugmici {
+    display: none;
+  }
+}
+
+
